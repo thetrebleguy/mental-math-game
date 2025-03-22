@@ -22,6 +22,7 @@ startButton.onclick = start;
 function getID(){
     let userNameCheck = nameValue.value;
     let classNameCheck = classValue.value
+    let userNameLength = userNameCheck.length;
 
     if(userNameCheck == 0 && classNameCheck == `invalid`){
         headingText1.textContent = `WOI`
@@ -33,7 +34,12 @@ function getID(){
     else if(classNameCheck == `invalid`){
         headingText1.textContent = `WOI`
         headingText2.textContent = `FILL YOUR CLASS`
-    } else{ 
+    } else if(userNameLength >= 16){
+        headingText1.textContent = `WOI`
+        headingText2.textContent = `NAME TOO LONG BRO (just use your first name / nicknames)`
+    } 
+    else{ 
+        console.log(userNameLength)
         userName = userNameCheck;
         className = classNameCheck;
         nextButton.style.display = `none`;
@@ -163,15 +169,35 @@ function timer(){
 
 function stopTimer(){
     let answerCheck = String(UIanswerText.value);
-   answerCheckLength = answerCheck.length
-    
-    if (answerCheckLength == 0){
-        UIquestionBox.style.backgroundColor = `#ffa05d`;
-    } else{
-        totalTime += timerArray[currentQuestionIndex-1];
-        clearInterval(timerUpdate);
-        submitAnswer();
-        UIquestionBox.style.backgroundColor = `#ffe8cc`;
+    let answerCheck1 = String(UIanswerText1.value);
+    let answerCheck2 = String(UIanswerText2.value);
+
+   answerCheckLength = answerCheck.length 
+   answerCheckLength1 = answerCheck1.length
+   answerCheckLength2 = answerCheck2.length
+
+   if(twoOptions == false){
+        if (answerCheckLength == 0){
+            UIquestionBox.style.backgroundColor = `#ffa05d`;
+            UIsubmitButton.textContent = `please fill the answer`;
+        } else{
+            totalTime += timerArray[currentQuestionIndex-1];
+            clearInterval(timerUpdate);
+            submitAnswer();
+            UIquestionBox.style.backgroundColor = `#ffe8cc`;
+            UIsubmitButton.textContent = `Answer (or press the enter key)`;
+        }
+    } else {
+        if (answerCheckLength1 == 0 || answerCheckLength2 == 0){
+            UIquestionBox.style.backgroundColor = `#ffa05d`;
+            UIsubmitButton.textContent = `please fill the answer`;
+        } else{
+            totalTime += timerArray[currentQuestionIndex-1];
+            clearInterval(timerUpdate);
+            submitAnswer();
+            UIquestionBox.style.backgroundColor = `#ffe8cc`;
+            UIsubmitButton.textContent = `Answer (or press the enter key)`;
+        }
     }
 }
 
@@ -229,7 +255,7 @@ function submitAnswer(){
     } else{
         let answerSubmitted1 = UIanswerText1.value;
         let answerSubmitted2 = UIanswerText2.value;
-        if (answer1 == answerSubmitted1 || answer2 == answerSubmitted2){
+        if (answer1 == answerSubmitted1 && answer2 == answerSubmitted2){
             addScore();
             nextQuestion();
         } else{
@@ -645,12 +671,28 @@ function ending(){
     container3.style.top = `1000px`;
     container4.style.top = `-400px`;
     heading1.style.display = `block`;
-    headingText1.textContent = `thank you for playing!`;
-    headingText2.textContent = `here are the results:`;
+    if (scoreTotal == 20000){
+        console.log(`you did it :D`);
+        document.body.style.backgroundColor = `#b3ffd0`;
+        headingText1.textContent = `CONGRATULATIONS!`;
+        headingText2.textContent = `YOU GOT A PERFECT SCORE 🎉`;
+    } else if(scoreTotal <= 0){
+        document.body.style.backgroundColor = `#ffacac`;
+        headingText1.textContent = `im sorry 😔😔`;
+        headingText2.textContent = `you can do better next time`;
+    } else if(accuracyTotal == 100){
+        document.body.style.backgroundColor = `#acdbff`;
+        headingText1.textContent = `congrats!`;
+        headingText2.textContent = `you got a perfect accuracy!`;
+    }else{
+        headingText1.textContent = `thank you for playing!`;
+        headingText2.textContent = `here are your results:`;
+    }
     finalSetUp();
 }
 
 const incorrectQuestionText = document.getElementById(`incorrect-question`);
+
 let incorrectArray = ""
 // SET UP THE FINAL LAYOUT
 function finalSetUp(){
@@ -661,7 +703,11 @@ function finalSetUp(){
     resultScore.textContent = `${scoreTotal}`;
 
     incorrectArray = incorrect.toString();
-    incorrectQuestionText.textContent = `Incorrect Questions: ${incorrectArray}`;
+    if (accuracyTotal == 100){
+        incorrectQuestionText.textContent = `Incorrect Number(s): None`;
+    } else{
+        incorrectQuestionText.textContent = `Incorrect Number(s): ${incorrectArray}`;
+    }
     console.log(`Name: ${userName}`);
     console.log(`Class: ${className}`);
     console.log(incorrectArray);
