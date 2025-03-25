@@ -7,6 +7,7 @@ let gameStatus = 0;
 const scoreMax = 20000;
 const headingText1 = document.getElementById(`headingText1`);
 const headingText2 = document.getElementById(`headingText2`);
+const headingText3 = document.getElementById(`headingText3`);
 const nameValue = document.getElementById(`nameValue`);
 const classValue = document.getElementById(`class`) 
 const nextButton = document.getElementById(`next`);
@@ -25,18 +26,22 @@ function getID(){
     let userNameLength = userNameCheck.length;
 
     if(userNameCheck == 0 && classNameCheck == `invalid`){
-        headingText1.textContent = `WOI`
-        headingText2.textContent = `FILL YOUR NAME AND CLASS`
+        headingText1.textContent = `WOI`;
+        headingText2.textContent = `FILL YOUR NAME AND CLASS`;
+        headingText3.textContent = `↓ ↓ ↓`;
     } else if(userNameCheck == 0){
         headingText1.textContent = `WOI`
         headingText2.textContent = `FILL YOUR NAME`
+        headingText3.textContent = `↓ ↓ ↓`;
     } 
     else if(classNameCheck == `invalid`){
         headingText1.textContent = `WOI`
         headingText2.textContent = `FILL YOUR CLASS`
+        headingText3.textContent = `↓ ↓ ↓`;
     } else if(userNameLength >= 16){
         headingText1.textContent = `WOI`
         headingText2.textContent = `NAME TOO LONG BRO (just use your first name / nicknames)`
+        headingText3.textContent = `↓ ↓ ↓`;
     } 
     else{ 
         console.log(userNameLength)
@@ -46,22 +51,25 @@ function getID(){
         proceedButton.style.display = `inline`;
         headingText1.textContent = `welcome ${userName} from ${className}!`;
         headingText2.textContent = `please click proceed to continue`;
+        headingText3.textContent = `↓ ↓ ↓`;
     }
 }
 
 // REMOVE THE ID-PAGE AND TRANSITION TO THE COUNTDOWN
+const container = document.getElementById(`container`);
+
 function proceed(){
     proceedButton.style.display = `none`;
     startButton.style.display = `block`;
     idPage.style.display = `none`;
     headingText1.textContent = `there are 20 questions in total`;
     headingText2.textContent = `best of luck :D`; 
+    headingText3.textContent = `please do not use any calculators or other tools such as paper and pen`;
     container.style.display = `none`;
 }
 
 const heading1 = document.getElementById(`heading-1`);
 const heading2 = document.getElementById(`heading-2`);
-const container = document.getElementById(`container`);
 const container2 = document.getElementById(`container-2`)
 const container3 = document.getElementById(`container-3`);
 const UI = document.getElementById(`UI`);
@@ -85,6 +93,7 @@ function start(){
     heading2.style.display = `block`;
     heading2.style.top = `0px`;
     container2.style.display = `none`;
+    container3.style.display = `block`;
     container3.style.top = `0px`;
 
     changeNameClass();
@@ -280,6 +289,10 @@ function addScore(){
 
 // QUESTIONS
 function question1(){
+    UIanswerText.style.display = `flex`;
+    UIanswerText1.style.display = `none`;
+    UIanswerText2.style.display = `none`;
+    UIanswerSymbol.textContent = ``
     let a = Math.ceil(Math.random() * 8 + 1);
     let b;
 
@@ -666,12 +679,13 @@ const resultScore = document.getElementById(`result-score-result`);
 // STOP THE GAME
 function ending(){
     gameStatus = 0;
+    headingText3.textContent = ``;
     UIanswerBox.style.display = `none`;
     heading2.style.top = `1000px`;
     container3.style.top = `1000px`;
-    container4.style.top = `-400px`;
+    container4.style.top = `-410px`;
     heading1.style.display = `block`;
-    if (scoreTotal == 20000){
+    if (scoreTotal == scoreMax){
         console.log(`you did it :D`);
         document.body.style.backgroundColor = `#b3ffd0`;
         headingText1.textContent = `CONGRATULATIONS!`;
@@ -708,10 +722,45 @@ function finalSetUp(){
     } else{
         incorrectQuestionText.textContent = `Incorrect Number(s): ${incorrectArray}`;
     }
-    console.log(`Name: ${userName}`);
-    console.log(`Class: ${className}`);
-    console.log(incorrectArray);
-    console.log(timerArray);
+}
+
+// RETURN
+const returnButton = document.getElementById(`return`);
+returnButton.onclick = returnGame;
+
+function returnGame(){
+    userName = ``;
+    className = ``;
+    scoreTotal = 0;
+    accuracyTotal = 0;
+    gameStatus = 0;
+    incorrect = [];
+
+    currentQuestionIndex = 1;
+    nameValue.value = ``;
+    classValue[0].selected = true;
+    headingText1.textContent = `mental math game :D`;
+    headingText2.textContent = `welcome back!`;
+    headingText3.textContent = `fill out your name and class below`;
+    idPage.style.display = `block`
+    container.style.display = `block`;
+    container2.style.display = `flex`;
+    nextButton.style.display = `inline`;
+    proceedButton.style.display = `none`;
+    heading2.style.top = `-1000px`;
+    container3.style.top = `-1500px`;
+    container4.style.top = `-2000px`;
+    UIsubmitBox.style.display = `none`;
+    returnButton.style.display = `none`
+    document.body.style.backgroundColor = `#fbfff0`;
+
+    totalTime = 0;
+    timerArray = [
+    { value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }, { value: 0 },
+    { value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }, { value: 0 },
+    { value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }, { value: 0 },
+    { value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }, { value: 0 },
+    ]
 }
 
 // FORMAT TIME INTO SECONDS AND MILLISECONDS
@@ -761,6 +810,13 @@ function sendDataToSheets(){
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
     })
-    .then(response => dataConfirmationText.textContent = `Your data has been sent!`)
+    .then(response => returnCall()
+    )
     .catch(error => console.error("Error sending data:", error));
+}
+
+// RETURN BUTTON AND CONFIRMATION
+function returnCall(){
+    returnButton.style.display = `flex`;
+    dataConfirmationText.textContent = `Your data has been sent!`
 }
