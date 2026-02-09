@@ -51,7 +51,7 @@ function getID(){
         proceedButton.style.display = `inline`;
         headingText1.textContent = `welcome ${userName} from ${className}!`;
         headingText2.textContent = `please click proceed to continue`;
-        headingText3.textContent = `↓ ↓ ↓`;
+        headingText3.textContent = `↓ ↓ ↓`; 
     }
 }
 
