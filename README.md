@@ -7,3 +7,4 @@ the project itself is done in march 2025, but due to errors from the previous co
 so here ya go :D
 
 have fun playing the game :)
+heres the link: https://thetrebleguy.github.io/mental-math-game/
