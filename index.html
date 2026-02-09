@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>The Mental Math Game</title>
+</head>
+<body>
+    <div id="heading-1">
+        <h1 id="headingText1">mental math game :D</h1>
+        <h2 id="headingText2">by: thetrebleguy</a></h2>
+        <h3 id="headingText3">fill out your name and class below</h3>
+    </div>
+    <div id="container">
+        <div id="id-page">
+            <p>Name:</p>
+            <input id="nameValue" required placeholder="Enter your name"></input><br><br>
+            <label>Class:</label>
+            <select id="class" required name="class" class="id-page-asset">
+                <option value="invalid">Choose your class</option>
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+            </select><br><br>
+            <button id="next" type="submit">Next</button>
+            <button id="proceed">Proceed</button>
+        </div>
+    </div>
+    <div id="container-2">
+        <button id="start">Start</button>
+    </div>
+    <div id="heading-2"> 
+        <h1 id="headingText3">mental math game :D</h1>
+    </div>
+    <div id="container-3">
+        <div id="UI">
+            <div id="UI-name" class="UI-element">Name: ---</div>
+            <div id="UI-progress" class="UI-element">Question: 1/20</div>
+            <div id="UI-class" class="UI-element">Class: ---</div>
+        </div>
+        <div id="UI-question-box">
+            <div id="UI-question-textbox">
+                <p id="UI-question-text">Game starts in 5</p>
+            </div>
+            <div id="UI-question-answer-box">
+                <input id="UI-question-answer" class="UI-answer-box" type="text" inputmode="numeric" placeholder="answer">
+                <input id="UI-question-answer-1" class="UI-answer-box" type="number">
+                <h1 id="UI-question-answer-symbol"></h1>
+                <input id="UI-question-answer-2" class="UI-answer-box" type="number">
+            </div>
+            <div id="UI-question-submit-box">
+                <button id="UI-question-submit" type="submit">Answer (or press the enter key)</button>
+            </div>
+        </div>
+    </div>
+    <div id="container-4">
+        <div id="result-box">
+            <div id="result-info-box">
+                <div id="result-info-name">Name: ...</div>
+                <div id="result-info-class">Class: ...</div>
+            </div>
+            <div id="result-accuracy-box">
+                <div id="result-accuracy-name">ACCURACY:</div>
+                <div id="result-accuracy-result">0%</div>
+            </div>
+            <div id="result-score-box">
+                <div id="result-score-name">FINAL SCORE:</div>
+                <div id="result-score-result">0</div>
+            </div>
+        </div>
+        <div id="return">Return</div>
+        <p id="incorrect-question"></p>
+        <p id="data-confirmation"></p>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>
